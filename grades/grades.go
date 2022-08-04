@@ -12,6 +12,20 @@ type Student struct {
 	Grades []Grade
 }
 
+type Grade struct {
+	Title string
+	Type GradeType
+	Score float32
+}
+
+type GradeType string
+
+const (
+	GradeTest = GradeType("Test")
+	GradeQuiz = GradeType("Quiz")
+	GradeHomework = GradeType("Homework")
+)
+
 func (s Student) Average() float32 {
 	var result float32
 	for _, grade := range s.Grades {
@@ -37,17 +51,3 @@ var (
 	students Students
 	studentMutex sync.Mutex
 )
-
-type GradeType string
-
-const (
-	GradeTest = GradeType("Test")
-	GradeQuiz = GradeType("Quiz")
-	GradeHomework = GradeType("Homework")
-)
-
-type Grade struct {
-	Title string
-	Type GradeType
-	Score float32
-}
