@@ -13,11 +13,11 @@ import (
 func main() {
 	host, port := "localhost", "6000"	
 
-	serviceName := fmt.Sprintf("http://%v:%v", host, port)
+	serviceAddress := fmt.Sprintf("http://%v:%v", host, port)
 
 	var r register.Registration
 	r.ServiceName = register.GradingService
-	r.ServiceURL = serviceName
+	r.ServiceURL = serviceAddress
 	r.RequiredServices = []register.ServiceName{register.LogService}
 	r.ServiceUpdateURL = r.ServiceURL + "/services"
 
