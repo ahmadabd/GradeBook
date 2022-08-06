@@ -23,6 +23,7 @@ func main() {
 	r.ServiceName = register.TeacherPortal
 	r.ServiceURL = serviceAddress
 	r.ServiceUpdateURL = r.ServiceURL + "/services"
+	r.HeartbeatURL = r.ServiceURL + "/heartbeat"
 	r.RequiredServices = []register.ServiceName{
 		register.GradingService,
 		register.LogService,

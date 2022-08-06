@@ -23,6 +23,7 @@ func main() {
 
 	r.RequiredServices = make([]register.ServiceName, 0)
 	r.ServiceUpdateURL = r.ServiceURL + "/services"
+	r.HeartbeatURL = r.ServiceURL + "/heartbeat"
 
 	ctx, err := service.Start(context.Background(), r, host, port, log.RegisterHandler)
 

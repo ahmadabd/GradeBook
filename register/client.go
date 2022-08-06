@@ -13,6 +13,14 @@ import (
 
 func RegisterService(r Registration) error {
 
+	heartbeatURL, err := url.Parse(r.HeartbeatURL)
+	if err != nil {
+		return nil
+	}
+	http.HandleFunc(heartbeatURL.Path, func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	})
+
 	serviceUpdateURL, err := url.Parse(r.ServiceUpdateURL)
 	if err != nil {
 		return err
@@ -39,7 +47,7 @@ func RegisterService(r Registration) error {
 	return nil
 }
 
-type serviceUpdateHandler struct {}
+type serviceUpdateHandler struct{}
 
 func (suh serviceUpdateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {

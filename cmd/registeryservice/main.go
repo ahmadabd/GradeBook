@@ -9,6 +9,8 @@ import (
 )
 
 func main() {
+	register.SetupRegistryService()
+
 	http.Handle("/services", &register.RegisteryService{})
 
 	ctx, cancel := context.WithCancel(context.Background())
