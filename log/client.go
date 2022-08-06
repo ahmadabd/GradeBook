@@ -26,7 +26,7 @@ func (cl clientLogger) Write(data []byte) (int, error) {
 	}
 
 	if res.StatusCode != http.StatusOK {
-		return 0, fmt.Errorf("failed to send log message.")
+		return 0, fmt.Errorf("failed to send log message")
 	}
 
 	return len(data), nil

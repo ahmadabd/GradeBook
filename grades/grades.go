@@ -6,23 +6,23 @@ import (
 )
 
 type Student struct {
-	ID	int
-	FirstName	string
-	LastName	string
-	Grades []Grade
+	ID        int
+	FirstName string
+	LastName  string
+	Grades    []Grade
 }
 
 type Grade struct {
 	Title string
-	Type GradeType
+	Type  GradeType
 	Score float32
 }
 
 type GradeType string
 
 const (
-	GradeTest = GradeType("Test")
-	GradeQuiz = GradeType("Quiz")
+	GradeTest     = GradeType("Test")
+	GradeQuiz     = GradeType("Quiz")
 	GradeHomework = GradeType("Homework")
 )
 
@@ -38,16 +38,16 @@ func (s Student) Average() float32 {
 type Students []Student
 
 func (s Students) GetByID(id int) (*Student, error) {
-	for _, student := range s {
-		if student.ID == id {
-			return &student, nil
+	for i := range s {
+		if s[i].ID == id {
+			return &s[i], nil
 		}
 	}
 
-	return nil, fmt.Errorf("Student with ID %d not found", id)
+	return nil, fmt.Errorf("Student with ID '%v' not found", id)
 }
 
 var (
-	students Students
-	studentMutex sync.Mutex
+	students     Students
+	studentMutex sync.RWMutex
 )

@@ -4,8 +4,8 @@ func init() {
 	students = []Student{
 		{
 			ID:        1,
-			FirstName: "John",
-			LastName:  "Doe",
+			FirstName: "Reza",
+			LastName:  "Moradi",
 			Grades: []Grade{
 				{
 					Title: "Test 1",
@@ -26,8 +26,8 @@ func init() {
 		},
 		{
 			ID:        2,
-			FirstName: "Jane",
-			LastName:  "Doe",
+			FirstName: "Sara",
+			LastName:  "Naghi",
 			Grades: []Grade{
 				{
 					Title: "Test 1",

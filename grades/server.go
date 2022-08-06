@@ -41,6 +41,10 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
+		if strings.ToLower(pathSegments[3]) != "grades" {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
 		sh.addGrade(w, r, id)
 	default:
 		w.WriteHeader(http.StatusNotFound)
@@ -48,8 +52,8 @@ func (sh studentsHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (sh studentsHandler) getAll(w http.ResponseWriter, r *http.Request) {
-	studentMutex.Lock()
-	defer studentMutex.Unlock()
+	studentMutex.RLock()
+	defer studentMutex.RUnlock()
 
 	data, err := sh.toJSON(students)
 
@@ -64,8 +68,8 @@ func (sh studentsHandler) getAll(w http.ResponseWriter, r *http.Request) {
 }
 
 func (sh studentsHandler) getOne(w http.ResponseWriter, r *http.Request, id int) {
-	studentMutex.Lock()
-	defer studentMutex.Unlock()
+	studentMutex.RLock()
+	defer studentMutex.RUnlock()
 
 	student, err := students.GetByID(id)
 	if err != nil {
@@ -88,7 +92,7 @@ func (sh studentsHandler) getOne(w http.ResponseWriter, r *http.Request, id int)
 func (sh studentsHandler) addGrade(w http.ResponseWriter, r *http.Request, id int) {
 	studentMutex.Lock()
 	defer studentMutex.Unlock()
-	
+
 	student, err := students.GetByID(id)
 	if err != nil {
 		w.WriteHeader(http.StatusNotFound)
@@ -105,11 +109,11 @@ func (sh studentsHandler) addGrade(w http.ResponseWriter, r *http.Request, id in
 	}
 
 	student.Grades = append(student.Grades, grade)
+
 	w.WriteHeader(http.StatusCreated)
-	data, err := sh.toJSON(student)
+	data, err := sh.toJSON(student.Grades)
 	if err != nil {
 		log.Println(err)
-		return
 	}
 	w.Header().Add("Content-Type", "application/json")
 	w.Write(data)
